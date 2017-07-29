@@ -1,5 +1,4 @@
 "use strict";
-console.log("whaddup");
 
 
 function get(file) {
@@ -14,7 +13,7 @@ function get(file) {
 
 function display(load){
     let data = JSON.parse(this.responseText);
-    console.log("load data: ", data);
+    console.log(`load data ${Object.keys(data)[0]}: `, data);
 }
 
 function oops(error){
