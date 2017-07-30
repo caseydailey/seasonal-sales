@@ -1,8 +1,34 @@
 "use strict";
 
 const displayDiv = document.querySelector("#display");
+const selectSeason = document.querySelector("#seasons");
 let products = [];
 let categories = [];
+
+selectSeason.addEventListener("change", showDiscounts);
+
+function showDiscounts(e){
+    let season = e.currentTarget.value;
+    let items = products.filter((prod)=> prod.category_info.season_discount === season)
+    let discountedItems = items.map((prod)=> {
+            console.log("prod: in map: ", prod);
+            prod.price = (prod.price - (prod.price*prod.category_info.discount)).toFixed(2);
+            return prod;
+        });
+
+    console.log("discountedItems", discountedItems);
+    displayDiv.innerHTML = ""
+    
+    discountedItems.forEach((prod)=>{
+        displayDiv.innerHTML += `<div>
+                                <h2>Name: ${prod.name}</h2>
+                                <p>Department: ${prod.category_info.name}</p>
+                                <p>Discounted Price: ${prod.price}</p>
+                                </div>`;
+                                
+        
+    });
+}
 
 function get(file) {
     let xhr = new XMLHttpRequest();
