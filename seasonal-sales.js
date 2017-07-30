@@ -1,6 +1,6 @@
 "use strict";
 
-const display = document.querySelector("#display");
+const displayDiv = document.querySelector("#display");
 let products = [];
 let categories = [];
 
@@ -22,13 +22,12 @@ function store(load){
     let value = Object.keys(data)[0];
     switch(value){
         case 'products': products = data.products;
-        console.log("products", products);
         break;
-        case 'categories': categories = data.categories;
-        console.log("categories", categories);
+        case 'categories': 
+        categories = data.categories;
+        combine(products, categories);
         break;
     }
-    combine(products, categories);
 }
 
 function combine(prod, cat){
@@ -40,8 +39,18 @@ function combine(prod, cat){
         });
     });
 console.log("products with cat_info: ", products);
+display(products);
 }
 
+function display(prods){
+    prods.forEach((prod)=>{
+        displayDiv.innerHTML += `<div>
+                                <h2>Name: ${prod.name}</h2>
+                                <p>Department: ${prod.category_info.name}</p>
+                                <p>Price: ${prod.price}</p>
+                              </div>`
+    });
+}
 
 
 get('products.json');
